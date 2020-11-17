@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.bep</groupId>
 	<artifactId>lingo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>4.2.0.RELEASE</version>
 	<name>lingo</name>
 	<description>Lingo game for BEP by Arjan Rakké</description>
 
