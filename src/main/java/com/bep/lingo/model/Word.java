@@ -1,12 +1,14 @@
 package com.bep.lingo.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "words", schema = "lingo")
-@Data
+@Getter
+@Setter
 public class Word {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

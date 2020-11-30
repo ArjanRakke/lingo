@@ -1,14 +1,13 @@
 package com.bep.lingo.controller;
 
+import com.bep.lingo.exception.GameDoesNotExistException;
 import com.bep.lingo.model.Game;
 import com.bep.lingo.model.StartedGame;
 import com.bep.lingo.model.Word;
 import com.bep.lingo.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -36,4 +35,5 @@ public class GameController {
     public List<Game> getGameList(HttpSession session) {
         return (List<Game>) session.getAttribute("games");
     }
+
 }

@@ -1,14 +1,16 @@
 package com.bep.lingo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@Data
+@Getter
+@Setter
 //https://github.com/sastani/Hangman/blob/master/src/main/java/com/models/Game.java
 public class Game {
     private final String gameId;
@@ -19,24 +21,26 @@ public class Game {
     private String guessedWord;
     private int guesses = 5;
     private int score = 0;
-    private long timeSinceLastGuess;
+
+    @JsonIgnore
+    private long timeOnGuess;
 
     public Game(Word word) {
-        gameId = createId();
+        this.gameId = createId();
         this.word = word;
         this.guessedWord = wordHider(this.word.getWord().length());
-        this.timeSinceLastGuess = System.currentTimeMillis();
+        this.timeOnGuess = System.currentTimeMillis();
     }
 
-    //hides the word
-    private static String wordHider(int word_len){
+    //hides the to be guessed word
+    public static String wordHider(int word_len){
         String w;
         w = "_".repeat(Math.max(0, word_len));
         return w;
     }
 
     //generate id for game
-    private static String createId(){
+    public static String createId(){
         String alphabet= "abcdefghijklmnopqrstuvwxyz";
         StringBuilder sb = new StringBuilder();
         String id;

@@ -1,14 +1,15 @@
 package com.bep.lingo.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class StartedGame {
     private final String gameId;
     private int score;
     private int guesses;
     private String word;
-    private long timeSinceLastGuess;
 
     public StartedGame(Game game) {
         gameId = game.getGameId();
