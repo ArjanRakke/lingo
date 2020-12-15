@@ -68,7 +68,7 @@ class GameUnitTests {
     @DisplayName("Games found")
     void getCurrentGamesGamesFound() {
         MockHttpSession session = new MockHttpSession();
-
+      
         Game game = new Game(wFive);
         StartedGame sGame = new StartedGame(game);
 
@@ -93,7 +93,7 @@ class GameUnitTests {
 
         assertEquals(session.getAttribute("games"), gList);
     }
-
+  
     @Test
     @DisplayName("Checks the word for correct, present and absent letters")
     void wordChecker() {
