@@ -3,39 +3,23 @@ package com.bep.lingo.game.domain;
 import com.bep.lingo.game.data.WordRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 class GameUnitTests {
-
-    @Autowired
-    private MockMvc mockMvc;
 
     @MockBean
     private WordRepository wordRepository;
@@ -80,14 +64,11 @@ class GameUnitTests {
         assertNotNull(game.getGameId());
     }
 
-    //https://www.logicbig.com/how-to/code-snippets/jcode-spring-mvc-mockhttpsession.html
     @Test
-    @DisplayName("Get all games")
-    void getCurrentGames() throws Exception {
+    @DisplayName("Games found")
+    void getCurrentGamesGamesFound() {
         MockHttpSession session = new MockHttpSession();
-
-        when(wordRepository.getFiveLetterWord()).thenReturn(wFive);
-
+      
         Game game = new Game(wFive);
         StartedGame sGame = new StartedGame(game);
 
@@ -96,11 +77,43 @@ class GameUnitTests {
 
         session.setAttribute("games", sgArray);
 
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/lingo/games")
-                .session(session).accept(MediaType.APPLICATION_JSON);
-        this.mockMvc.perform(builder)
-                .andExpect(MockMvcResultMatchers.status()
-                        .isOk()).andDo(print());
+        List<Game> gList = game.getCurrentGames(session);
 
+        assertEquals(session.getAttribute("games"), gList);
+    }
+
+    @Test
+    @DisplayName("No games found")
+    void getCurrentGamesNoGamesFound() {
+        MockHttpSession session = new MockHttpSession();
+
+        Game game = new Game(wFive);
+
+        List<Game> gList = game.getCurrentGames(session);
+
+        assertEquals(session.getAttribute("games"), gList);
+    }
+  
+    @Test
+    @DisplayName("Checks the word for correct, present and absent letters")
+    void wordChecker() {
+        Game game = new Game(wFive);
+        String guess = "vibes";
+
+        String check = game.wordChecker(game, guess);
+
+        assertEquals("[v: present, i: correct, b: absent, e: correct, s: correct]", check);
+    }
+
+    @Test
+    @DisplayName("Set letters at correct position")
+    void setGuessedWord() {
+        Game game = new Game(wFive);
+
+        String word = "vibes";
+
+        game.setGuessedWord(word);
+
+        assertEquals("fi_es", game.getGuessedWord());
     }
 }
