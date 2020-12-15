@@ -1,13 +1,7 @@
 package com.bep.lingo.game.domain;
 
-import com.bep.lingo.game.domain.exception.GameDoesNotExistException;
-import com.bep.lingo.game.domain.exception.GameOverException;
-import com.bep.lingo.game.domain.exception.InvalidWordException;
-import com.bep.lingo.game.domain.exception.TimeOverLimitException;
-import com.bep.lingo.game.presentation.GameDoesNotExistInfo;
-import com.bep.lingo.game.presentation.GameOverInfo;
-import com.bep.lingo.game.presentation.InvalidWordInfo;
-import com.bep.lingo.game.presentation.TimeOverLimitInfo;
+import com.bep.lingo.game.domain.exception.*;
+import com.bep.lingo.game.presentation.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -213,6 +207,14 @@ public class Game {
     public ResponseEntity<TimeOverLimitInfo> timeOverLimit() {
         String s = "You took too long to guess! You must make a guess within 10 seconds!";
         TimeOverLimitInfo error = new TimeOverLimitInfo(s);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    //exception handler for dealing with attempts to register a score on an active game
+    @ExceptionHandler(GameIsStillActiveException.class)
+    public ResponseEntity<GameIsStillActiveInfo> gameIsStillActive(String id) {
+        String s = String.format("Game with id: %s is still active. You cannot register a score from an active game!", id);
+        GameIsStillActiveInfo error = new GameIsStillActiveInfo(s);
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 }
