@@ -38,6 +38,9 @@ class GameControllerIntTest {
     private MockMvc mockMvc;
 
     @MockBean
+    private HighscoreController highscoreController;
+
+    @MockBean
     private WordRepository wordRepository;
 
     @Test

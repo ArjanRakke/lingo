@@ -1,6 +1,7 @@
 package com.bep.lingo.game.domain;
 
 import com.bep.lingo.game.data.WordRepository;
+import com.bep.lingo.game.presentation.HighscoreController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -20,6 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @AutoConfigureMockMvc
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 class GameUnitTests {
+
+    @MockBean
+    private HighscoreController highscoreController;
 
     @MockBean
     private WordRepository wordRepository;
