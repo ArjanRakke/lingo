@@ -2,7 +2,6 @@ package com.bep.lingo.game.domain;
 
 import com.bep.lingo.game.domain.exception.GameDoesNotExistException;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
@@ -10,7 +9,6 @@ import java.util.List;
 
 @Component
 @Getter
-@Setter
 public class GameFinder {
 
     //https://github.com/sastani/Hangman/blob/master/src/main/java/com/web/GamesController.java
