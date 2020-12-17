@@ -5,12 +5,10 @@ import com.bep.lingo.game.domain.*;
 import com.bep.lingo.game.domain.exception.GameDoesNotExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequestMapping("/lingo")
@@ -25,7 +23,7 @@ public class HighscoreController {
     }
 
     //Register highscore
-    @PostMapping("/highscore")
+    @PostMapping("/registerhighscore")
     public ResponseEntity<?> registerHighscore(@RequestBody RegisterHighScore registerHighscore, HttpSession session) throws GameDoesNotExistException {
         String game = registerHighscore.getGame();
         String player = registerHighscore.getPlayer();
@@ -45,10 +43,14 @@ public class HighscoreController {
             return g.gameDoesNotExist(game);
         }
 
-
-
         HighScore highscore = new HighScore(player, g.getScore());
 
         return new ResponseEntity<>(highscore, HttpStatus.OK);
+    }
+
+    //Get all highscores
+    @GetMapping("/highscores")
+    public List<HighScore> getAllHigscores() {
+        return highscoreRepository.getAllHighScores();
     }
 }
