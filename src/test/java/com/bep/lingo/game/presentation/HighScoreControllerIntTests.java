@@ -75,7 +75,7 @@ class HighScoreControllerIntTests {
 
         session.setAttribute("games", gArray);
 
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/lingo/highscore")
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/lingo/registerhighscore")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson)
                 .session(session);
@@ -112,7 +112,7 @@ class HighScoreControllerIntTests {
 
         session.setAttribute("games", gArray);
 
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/lingo/highscore")
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/lingo/registerhighscore")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson)
                 .session(session);
@@ -148,7 +148,7 @@ class HighScoreControllerIntTests {
 
         session.setAttribute("games", gArray);
 
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/lingo/highscore")
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/lingo/registerhighscore")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson)
                 .session(session);
