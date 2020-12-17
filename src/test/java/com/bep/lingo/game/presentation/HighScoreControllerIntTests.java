@@ -2,14 +2,14 @@ package com.bep.lingo.game.presentation;
 
 import com.bep.lingo.game.data.HighscoreRepository;
 import com.bep.lingo.game.data.WordRepository;
-import com.bep.lingo.game.domain.Game;
-import com.bep.lingo.game.domain.GameStatus;
-import com.bep.lingo.game.domain.RegisterHighScore;
-import com.bep.lingo.game.domain.Word;
+import com.bep.lingo.game.domain.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import javafx.beans.binding.When;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -26,7 +26,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -153,5 +156,28 @@ class HighScoreControllerIntTests {
         this.mockMvc.perform(builder)
                     .andExpect(MockMvcResultMatchers.status()
                     .is4xxClientError()).andDo(print());
+    }
+
+    @Test
+    @DisplayName("Get all highscores")
+    void getAllHighscores() throws Exception {
+
+        HighScore highScore = new HighScore("James", 4);
+        HighScore highScore2 = new HighScore("Arjan", 5);
+        HighScore highScore3 = new HighScore("Ana", 4);
+        HighScore highScore4 = new HighScore("Bob", 2);
+
+        ArrayList list = new ArrayList();
+        list.add(highScore);
+        list.add(highScore2);
+        list.add(highScore3);
+        list.add(highScore4);
+
+        Mockito.when(highscoreRepository.getAllHighScores()).thenReturn(list);
+
+        mockMvc.perform(get("/lingo/highscores")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 }

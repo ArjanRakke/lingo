@@ -8,10 +8,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface HighscoreRepository extends JpaRepository<HighScore, Long> {
     @Modifying
     @Query(value = "INSERT INTO lingo.highscore (player, score) VALUES (:player , :score)", nativeQuery = true)
     @Transactional
     void registerHighscore(@Param("player") String player, @Param("score") int score);
+    @Query(value = "SELECT player, score FROM lingo.highscore ORDER BY score DESC;", nativeQuery = true)
+    List<HighScore> getAllHighScores();
 }
