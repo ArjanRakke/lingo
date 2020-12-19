@@ -121,3 +121,6 @@ buildNumber.properties
 # End of https://www.toptal.com/developers/gitignore/api/maven,intellij
 /.idea/dataSources.xml
 /.idea/sqldialects.xml
+/.idea/
+/.idea/
+/.mvn/
