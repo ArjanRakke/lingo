@@ -16,7 +16,11 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<!--<sonar.projectKey>ArjanRakke_lingo</sonar.projectKey>
+		<sonar.organization>arjanrakke</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>-->
 	</properties>
+
 
 	<dependencies>
 		<dependency>
