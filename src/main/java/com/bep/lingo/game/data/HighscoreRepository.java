@@ -13,9 +13,9 @@ import java.util.List;
 @Repository
 public interface HighscoreRepository extends JpaRepository<HighScore, Long> {
     @Modifying
-    @Query(value = "INSERT INTO highscore (player, score) VALUES (:player , :score)", nativeQuery = true)
+    @Query(value = "INSERT INTO lingo.highscore (player, score) VALUES (:player , :score)", nativeQuery = true)
     @Transactional
     void registerHighscore(@Param("player") String player, @Param("score") int score);
-    @Query(value = "SELECT player, score FROM highscore ORDER BY score DESC;", nativeQuery = true)
+    @Query(value = "SELECT player, score FROM lingo.highscore ORDER BY score DESC;", nativeQuery = true)
     List<HighScore> getAllHighScores();
 }
