@@ -2,7 +2,7 @@
 
 SonarQube static analysis result:
 
-![](SonarQubeAnalysis.png)
+![](images/SonarQubeAnalysis.PNG)
 
 # lingo
 Lingo game for BEP by Arjan Rakké
