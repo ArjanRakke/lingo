@@ -4,6 +4,10 @@ SonarQube static analysis result:
 
 ![](images/SonarQubeAnalysis.PNG)
 
+Jacoco branch coverage result:
+
+![](images/Jacoco.PNG)
+
 # lingo
 Lingo game for BEP by Arjan Rakké
 
